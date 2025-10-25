@@ -1,40 +1,69 @@
-import { useParams } from "react-router-dom"
-import { useState, useEffect, } from "react"
+import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import * as API from "../Services/Launches.js";
-import { Text, Flex, Box, Button, SimpleGrid } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import "./comp-styles/LaunchDetails.css";
 
-export function LaunchDetails() {
+export function LaunchDetails(item) {
+  const [launch, setLaunch] = useState(null);
+  const { launchId } = useParams();
 
-    const [launch, setLaunch] = useState([]);
-    const { launchId } = useParams();
+  useEffect(() => {
+    API.getLaunchById(launchId).then(setLaunch);
+  }, [launchId]);
 
-    useEffect(() => {
-        API.getLaunchById(launchId).then(setLaunch);
-
-    }, [launchId])
-
+  if (!launch) {
     return (
+      <div className="launch-details-box">
+        <p className="loading-text">Loading...</p>
+      </div>
+    );
+  }
 
-        <SimpleGrid columns={[1, null, 1]} spacing='40px' w='full' p='9' bgColor='black' justifyContent='center' alignItems='center'>
+  // Get vid from Link
+  const videoId = launch.links.video_link
+    ? new URL(launch.links.video_link).searchParams.get("v")
+    : null;
 
+  return (
+    <div className="launch-details-box">
+      <div className="details-container">
+        <h2 style={{ fontSize: "24px", marginBottom: "16px" }}>Details</h2>
 
-            <Box bgColor='black'>
-                <Flex bgColor='blue.800' justifyContent='center' alignItems='center' direction=" column" p='6' h='auto'>
-                    <Text color='white' fontSize='xl'>Details</Text>
-                    <Text color='white' textAlign='center' p='10'>{launch.details = null ? 'Not found' : launch.details}</Text>
-                    <Link to='/SpaceX'>
-                        <Button w='20' mt='' colorScheme='purple'>Back</Button>
-                    </Link>
-                </Flex>
+        {/* Info about the launch */}
+        <p className="launch-info-text">
+          {launch?.details ? launch.details : "Not found"}
+        </p>
 
+        {/* launch video*/}
+        <div className="launch-video-container">
+          <iframe
+            width="100%"
+            height="315"
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
 
-
-
-            </Box>
-
-        </SimpleGrid>
-
-
-    )
+        {/* Back to the main page*/}
+        <Link to="/SpaceX">
+          <button
+            style={{
+              marginTop: "16px",
+              padding: "10px 20px",
+              backgroundColor: "purple",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer",
+            }}
+          >
+            Back
+          </button>
+        </Link>
+      </div>
+    </div>
+  );
 }

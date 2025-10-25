@@ -1,0 +1,68 @@
+/* Loading animation */
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.loading-text {
+    color: #fff;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Main grid layout */
+.launch-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    background-color: #0b0d17;
+    justify-items: center;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .launch-list-container {
+        padding: 1rem;
+    }
+}
+
+/* Card container */
+.launch-item {
+    background: linear-gradient(145deg, #001a33 0%, #003366 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 1.75rem;
+    width: 100%;
+    max-width: 380px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.launch-item:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.2),
+        0 10px 10px -5px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+}

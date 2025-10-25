@@ -1,32 +1,33 @@
-import { SimpleGrid, Image, Flex} from '@chakra-ui/react'
-import { Routes, Route } from 'react-router-dom'
-import { LaunchList } from './Components/LaunchList'
-import { LaunchDetails } from './Components/LaunchDetails'
-import Logo from '../src/Assets/Logo.png'
+import { Image } from "@chakra-ui/react";
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import { LaunchList } from "./Components/LaunchList";
+import { LaunchDetails } from "./Components/LaunchDetails";
+import Logo from "../src/Assets/Logo.png";
 
 function App() {
-
-
-   return (
-      <div bgColor='red'>
-
-         <SimpleGrid columns={[1, null, 1]} p='0' bgColor='black' justifyContent='center' alignItems='center' w='full' >
-            <Flex justifyContent='center' alignItems='center' paddingLeft='10' paddingTop='5'>
-               <Image w='sm' justifyContent='center' alignItems='center' src={Logo} alt='Dan Abramov' />
-            </Flex>
-            <Routes>
-               <Route path='SpaceX/' element={<LaunchList />} />
-               <Route path='/launches/:launchId' element={<LaunchDetails />} />
-            </Routes>
-         </SimpleGrid>
-
-
-
-
-
+  return (
+    <div className="container">
+      <div className="navbar">
+        <div className="logo-container">
+          <Image w="sm" src={Logo} alt="SpaceX Logo" />
+        </div>
+        <div className="go-to-official-site">
+          <a
+            href="https://www.spacex.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Go to Official Page
+          </a>
+        </div>
       </div>
-   );
-
+      <Routes>
+        <Route path="/SpaceX" element={<LaunchList />} />
+        <Route path="/launches/:launchId" element={<LaunchDetails />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
